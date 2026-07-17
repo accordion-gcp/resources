@@ -1,0 +1,31 @@
+customer_id,first_name,last_name,email,city,country,region,customer_segment,signup_date,churned
+1,Asha,Sharma,asha.sharma@example.com,New York,USA,US,Enterprise,2023-01-26,False
+2,Rohit,Verma,rohit.verma@example.com,Paris,France,EU,Enterprise,2023-05-23,True
+3,Meera,Iyer,meera.iyer@example.com,Kolkata,India,APAC,SMB,2024-08-27,True
+4,Karan,Nair,karan.nair@example.com,Sao Paulo,Brazil,LATAM,Consumer,2023-08-12,False
+5,Priya,Gupta,priya.gupta@example.com,Dubai,UAE,MEA,Consumer,2024-07-28,False
+6,Vikram,Rao,vikram.rao@example.com,Chicago,USA,US,SMB,2023-08-14,False
+7,Sana,Khan,sana.khan@example.com,Berlin,Germany,EU,Enterprise,2023-06-13,False
+8,Dev,Reddy,dev.reddy@example.com,Singapore,Singapore,APAC,Consumer,2023-06-09,False
+9,Anjali,Mehta,anjali.mehta@example.com,Mexico City,Mexico,LATAM,Consumer,2023-04-15,False
+10,Suresh,Joshi,suresh.joshi@example.com,Cairo,Egypt,MEA,Enterprise,2023-12-19,False
+11,Neha,Bose,neha.bose@example.com,New York,USA,US,Enterprise,2024-04-15,True
+12,Arjun,Chatterjee,arjun.chatterjee@example.com,Dublin,Ireland,EU,Enterprise,2023-03-22,False
+13,Divya,Pillai,divya.pillai@example.com,Singapore,Singapore,APAC,Consumer,2024-08-14,False
+14,Rahul,Malhotra,rahul.malhotra@example.com,Sao Paulo,Brazil,LATAM,Consumer,2024-11-08,False
+15,Pooja,Kapoor,pooja.kapoor@example.com,Dubai,UAE,MEA,Consumer,2023-08-27,False
+16,Amit,Menon,amit.menon@example.com,Chicago,USA,US,SMB,2024-10-12,True
+17,Kavya,Das,kavya.das@example.com,Amsterdam,Netherlands,EU,Enterprise,2023-08-03,False
+18,Sanjay,Bhatt,sanjay.bhatt@example.com,Kolkata,India,APAC,Enterprise,2024-09-15,True
+19,Ritu,Agarwal,ritu.agarwal@example.com,Bogota,Colombia,LATAM,Consumer,2023-09-08,False
+20,Manish,Singh,manish.singh@example.com,Cairo,Egypt,MEA,Enterprise,2024-10-17,False
+21,Isha,Fernandes,isha.fernandes@example.com,Seattle,USA,US,Consumer,2023-02-27,False
+22,Varun,D'Souza,varun.d'souza@example.com,Amsterdam,Netherlands,EU,SMB,2024-02-15,True
+23,Nisha,Chowdhury,nisha.chowdhury@example.com,Singapore,Singapore,APAC,Enterprise,2023-08-06,False
+24,Gaurav,Naidu,gaurav.naidu@example.com,Bogota,Colombia,LATAM,Consumer,2024-04-14,False
+25,Swati,Bhatia,swati.bhatia@example.com,Dubai,UAE,MEA,Enterprise,2024-07-28,False
+26,Aditya,Kaur,aditya.kaur@example.com,Chicago,USA,US,SMB,2024-08-20,False
+27,Lakshmi,Prasad,lakshmi.prasad@example.com,Paris,France,EU,SMB,2024-06-05,True
+28,Kunal,Rana,kunal.rana@example.com,Kolkata,India,APAC,Consumer,2023-04-23,False
+29,Tanvi,Sethi,tanvi.sethi@example.com,Bogota,Colombia,LATAM,Enterprise,2024-03-08,True
+30,Rajesh,Ahluwalia,rajesh.ahluwalia@example.com,Cairo,Egypt,MEA,SMB,2024-09-02,False

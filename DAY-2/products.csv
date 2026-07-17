@@ -1,0 +1,27 @@
+product_id,product_name,category,subcategory,unit_price,description
+1,Wireless Mouse,Electronics,Accessories,799.0,"A compact wireless mouse with ergonomic design and long battery life, ideal for everyday office use."
+2,Mechanical Keyboard,Electronics,Accessories,3499.0,"A durable mechanical keyboard with tactile switches, backlighting, and a sturdy aluminum frame."
+3,27-inch Monitor,Electronics,Displays,15999.0,"A 27-inch QHD monitor with vibrant colors and thin bezels, suited for productivity and creative work."
+4,Noise Cancelling Headphones,Electronics,Audio,8999.0,"Over-ear headphones with active noise cancellation, designed for long listening sessions and travel."
+5,Bluetooth Speaker,Electronics,Audio,2499.0,A portable bluetooth speaker with rich bass and a splash resistant body for outdoor use.
+6,USB-C Hub,Electronics,Accessories,1899.0,"A multi port USB-C hub supporting HDMI, ethernet, and fast charging for modern laptops."
+7,Laptop Stand,Furniture,Desk Accessories,1299.0,An adjustable aluminum laptop stand that improves posture and airflow during long work sessions.
+8,Office Chair,Furniture,Seating,12999.0,An ergonomic office chair with lumbar support and adjustable armrests for all day comfort.
+9,Standing Desk,Furniture,Desks,24999.0,A motorized standing desk that transitions smoothly between sitting and standing positions.
+10,Desk Lamp,Furniture,Lighting,999.0,A minimalist LED desk lamp with adjustable brightness and color temperature settings.
+11,Notebook Set,Stationery,Paper Goods,349.0,"A set of three dotted notebooks with recycled paper, useful for journaling and planning."
+12,Fountain Pen,Stationery,Writing,1499.0,"A classic fountain pen with a smooth stainless steel nib, suitable for daily writing."
+13,Sticky Notes Pack,Stationery,Paper Goods,149.0,A pack of colorful sticky notes in assorted sizes for quick reminders and organization.
+14,Backpack,Accessories,Bags,2999.0,A water resistant backpack with a padded laptop compartment and multiple organizer pockets.
+15,Water Bottle,Accessories,Lifestyle,599.0,An insulated stainless steel water bottle that keeps beverages cold for up to 24 hours.
+16,Yoga Mat,Fitness,Exercise,1199.0,"A non slip yoga mat made from eco friendly materials, suitable for yoga and floor exercises."
+17,Dumbbell Set,Fitness,Exercise,3999.0,"An adjustable dumbbell set that replaces multiple fixed weights, ideal for home workouts."
+18,Running Shoes,Fitness,Apparel,4999.0,Lightweight running shoes with cushioned soles designed for daily runs and long distances.
+19,Smart Watch,Electronics,Wearables,9999.0,"A smartwatch that tracks fitness metrics, sleep, and notifications with a week long battery life."
+20,Fitness Tracker Band,Electronics,Wearables,2999.0,"A lightweight fitness band that monitors steps, heart rate, and sleep patterns throughout the day."
+21,Coffee Maker,Kitchen,Appliances,5999.0,An automatic drip coffee maker with a built in timer and a reusable filter basket.
+22,Electric Kettle,Kitchen,Appliances,1799.0,A fast boiling electric kettle with auto shutoff and a cordless pour design.
+23,Blender,Kitchen,Appliances,3499.0,"A high speed blender suitable for smoothies, soups, and food preparation."
+24,Non-stick Pan Set,Kitchen,Cookware,2499.0,"A set of non stick pans with even heat distribution, compatible with induction cooktops."
+25,Desk Organizer,Furniture,Desk Accessories,799.0,A multi compartment desk organizer that keeps stationery and small items neatly arranged.
+26,Webcam HD,Electronics,Accessories,2299.0,"A 1080p HD webcam with a built in microphone, well suited for video calls and streaming."
