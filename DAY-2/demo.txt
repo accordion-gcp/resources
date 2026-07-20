@@ -1,0 +1,49 @@
+# External Data
+
+1. Upload csv, orc and parquet files to a new bucket
+2. Create dataset, table of external type select csv file and show how it can still query it.
+
+#BigLake
+
+1. Create a connection and assing storage admin to service account
+2. create external table using parquet and orc and show.
+3. Using python file generate iceberg table. ensure to have orders.csv file on cloud shell.
+4. Create row level security --> 
+create row access policy customer_access_policy9 on `project-2df9d2ad-b6f5-4ed5-997.orders.orderslakehouse` grant to ('user:himanshu.rathi@talktotechie.com') filter using (country='Australia')
+
+5. column level security -- create a policy tag. edit schema on the table and associate. then assign fine grained reader.
+
+IAM -- 
+
+Managed IceBerg -->
+
+
+remote functions --> 
+
+1. deploy the function with entrypoint
+2. assign the permission to service account - cloud run invoker
+3. create function --> 
+
+CREATE OR REPLACE FUNCTION `project-2df9d2ad-b6f5-4ed5-997.orders.convert_to_inr`(amount FLOAT64, country STRING)
+RETURNS FLOAT64
+REMOTE WITH CONNECTION `project-2df9d2ad-b6f5-4ed5-997.US.biglake1`
+OPTIONS (
+  endpoint = 'https://function1-616219418759.us-central1.run.app/convert_to_inr',
+  max_batching_rows = 50
+);
+
+select sum(amount) FROM `project-2df9d2ad-b6f5-4ed5-997.orders.orders_sample` where country = "Australia";
+
+
+SELECT
+  country,
+  SUM(amount) AS total_amount,
+  `project-2df9d2ad-b6f5-4ed5-997.orders.convert_to_inr`(SUM(amount), country) AS total_amount_inr
+FROM `project-2df9d2ad-b6f5-4ed5-997.orders.orders_sample`
+WHERE country = 'Australia'
+GROUP BY country;
+
+SELECT
+  SUM(`project-2df9d2ad-b6f5-4ed5-997.orders.orders_sample`(amount, country)) AS total_revenue_inr
+FROM `project-2df9d2ad-b6f5-4ed5-997.orders.orders_sample`;
+

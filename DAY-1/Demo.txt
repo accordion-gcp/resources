@@ -1,0 +1,136 @@
+
+CREATE OR REPLACE TABLE `himanshugcpproject1.demo.scores` (
+  name STRING,
+  points INT64
+);
+
+INSERT INTO `himanshugcpproject1.demo.scores` VALUES
+  ('himanshu', 10), ('rahul', 20), ('ronit', 30);
+
+
+CALL BQ.REFRESH_MATERIALIZED_VIEW('himanshugcpproject1.demo.mv_total');
+
+
+
+PartitioningDatewise
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_day`
+PARTITION BY order_date
+CLUSTER BY country, category
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_month`
+PARTITION BY DATE_TRUNC(order_date, MONTH)
+CLUSTER BY customer_id
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+SELECT COUNT(*) AS order_count
+FROM `partition_demo.orders_by_month`
+WHERE order_date BETWEEN '2023-06-01' AND '2023-06-30';
+
+SELECT COUNT(*) AS order_count
+FROM `partition_demo.orders_by_month`
+WHERE DATE_TRUNC(order_date, MONTH) = DATE_TRUNC(DATE '2023-06-15', MONTH);
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_year`
+PARTITION BY DATE_TRUNC(order_date, YEAR)
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+SELECT COUNT(*) AS order_count
+FROM `partition_demo.orders_by_year`
+WHERE order_date BETWEEN '2023-01-01' AND '2023-12-31';
+-- Multi-year trend
+SELECT DATE_TRUNC(order_date, YEAR) AS order_year, COUNT(*) AS order_count
+FROM `partition_demo.orders_by_year`
+GROUP BY order_year
+ORDER BY order_year;
+
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_hour`
+PARTITION BY TIMESTAMP_TRUNC(order_ts, HOUR)
+OPTIONS (partition_expiration_days = 400)
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+
+Ingestion Time Based 
+
+
+CREATE TABLE `partition_demo.orders_ingestion`
+(
+ order_id INT64,
+ order_date DATE,
+ order_ts TIMESTAMP,
+ customer_id INT64,
+ country STRING,
+ category STRING,
+ amount NUMERIC
+)
+PARTITION BY _PARTITIONTIME
+OPTIONS (partition_expiration_days = 90);
+-- Load a batch (simulates data arriving today)
+INSERT INTO `partition_demo.orders_ingestion`
+SELECT * FROM `partition_demo.orders_raw`
+WHERE order_id BETWEEN 1 AND 100000;
+-- Load into a specific historical partition via the bq CLI decorator
+-- bq query --destination_table=partition_demo.orders_ingestion'$20240115' \
+-- --use_legacy_sql=false \
+-- 'SELECT * FROM partition_demo.orders_raw WHERE order_id BETWEEN 100001 AND 200000'
+
+SELECT COUNT(*) AS order_count
+FROM `partition_demo.orders_ingestion`
+WHERE _PARTITIONTIME BETWEEN TIMESTAMP '2024-01-15' AND TIMESTAMP '2024-01-16';
+
+integer range based --
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_customer_range`
+PARTITION BY RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 200000, 10000))
+CLUSTER BY country
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+SELECT COUNT(*) AS order_count
+FROM `partition_demo.orders_by_customer_range`
+WHERE customer_id BETWEEN 50000 AND 59999;
+
+Clustering only
+
+
+CREATE OR REPLACE TABLE `partition_demo.orders_clustered_only`
+CLUSTER BY country, category, customer_id
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+-- Prunes well: country is the leading (first) clustering key
+SELECT SUM(amount) FROM `partition_demo.orders_clustered_only`
+WHERE country = 'India';
+-- Prunes far less: customer_id is the third/trailing clustering key
+SELECT SUM(amount) FROM `partition_demo.orders_clustered_only`
+WHERE customer_id = 42;
+
+
+partitioning + clustering --> 
+
+CREATE OR REPLACE TABLE `partition_demo.orders_by_day`
+PARTITION BY order_date
+CLUSTER BY country, category
+AS SELECT * FROM `partition_demo.orders_raw`;
+
+-- Step 1: no pruning at all — full table scan
+SELECT country, SUM(amount) AS revenue
+FROM `partition_demo.orders_raw`
+WHERE order_date BETWEEN '2023-06-01' AND '2023-06-30'
+GROUP BY country;
+-- Step 2: partition pruning only — scans ~30 daily partitions instead of all ~1,460
+SELECT country, SUM(amount) AS revenue
+FROM `partition_demo.orders_by_day`
+WHERE order_date BETWEEN '2023-06-01' AND '2023-06-30'
+GROUP BY country;
+-- Step 3: partition + cluster pruning — scans ~30 partitions, then skips
+-- non-India blocks within each one
+SELECT SUM(amount) AS revenue
+FROM `partition_demo.orders_by_day`
+WHERE order_date BETWEEN '2023-06-01' AND '2023-06-30'
+ AND country = 'India';
+
+ ALTER TABLE `partition_demo.orders_by_day`
+SET OPTIONS (require_partition_filter = true);
+

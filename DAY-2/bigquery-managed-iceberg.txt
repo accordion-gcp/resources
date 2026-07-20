@@ -1,0 +1,33 @@
+CREATE TABLE `himanshugcpproject1.orders.orders_iceberg_managed`
+(
+  order_id INT64,
+  order_date DATE,
+  order_ts TIMESTAMP,
+  customer_id INT64,
+  country STRING,
+  category STRING,
+  amount FLOAT64
+)
+WITH CONNECTION `himanshugcpproject1.US.gcsconn`
+OPTIONS (
+  file_format = 'PARQUET',
+  table_format = 'ICEBERG',
+  storage_uri = 'gs://himanshugcpproject1bucket/iceberg_managed/orders'
+);
+
+
+
+INSERT INTO `himanshugcpproject1.orders.orders_iceberg_managed` SELECT * FROM `himanshugcpproject1.orders.orders_csv` LIMIT 5;
+
+
+UPDATE `himanshugcpproject1.orders.orders_iceberg_managed`
+SET amount = amount * 1.1
+WHERE country = 'India' AND category = 'Electronics';
+
+SELECT sum(amount) FROM `himanshugcpproject1.orders.orders_iceberg_managed` WHERE country = 'India' AND category = 'Electronics';
+
+
+SELECT COUNT(*)
+FROM `himanshugcpproject1.orders.orders_iceberg_managed`;
+
+SELECT COUNT(*) FROM `himanshugcpproject1.orders.orders_iceberg_managed` FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 12 MINUTE);
