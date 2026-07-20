@@ -7,6 +7,10 @@ CREATE OR REPLACE TABLE `himanshugcpproject1.demo.scores` (
 INSERT INTO `himanshugcpproject1.demo.scores` VALUES
   ('himanshu', 10), ('rahul', 20), ('ronit', 30);
 
+create view `himanshugcpproject1.demo.scores_total` AS select sum(points) AS total from `himanshugcpproject1.demo.scores`;
+
+CREATE MATERIALIZED VIEW `project-2df9d2ad-b6f5-4ed5-997.demo.totalscores_mv` AS select sum(points) AS total from `project-2df9d2ad-b6f5-4ed5-997.demo.scores`;
+
 
 CALL BQ.REFRESH_MATERIALIZED_VIEW('himanshugcpproject1.demo.mv_total');
 
@@ -40,6 +44,7 @@ AS SELECT * FROM `partition_demo.orders_raw`;
 SELECT COUNT(*) AS order_count
 FROM `partition_demo.orders_by_year`
 WHERE order_date BETWEEN '2023-01-01' AND '2023-12-31';
+
 -- Multi-year trend
 SELECT DATE_TRUNC(order_date, YEAR) AS order_year, COUNT(*) AS order_count
 FROM `partition_demo.orders_by_year`
@@ -68,6 +73,8 @@ CREATE TABLE `partition_demo.orders_ingestion`
 )
 PARTITION BY _PARTITIONTIME
 OPTIONS (partition_expiration_days = 90);
+
+
 -- Load a batch (simulates data arriving today)
 INSERT INTO `partition_demo.orders_ingestion`
 SELECT * FROM `partition_demo.orders_raw`
